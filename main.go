@@ -42,7 +42,7 @@ func main() {
 	http.HandleFunc("/shorten", shortenHandler)
 	http.HandleFunc("/", redirectHandler)
 	// Start the HTTP server on port 8080
-	fmt.Println("Server started on http://localhost:8081")
+	fmt.Println("Server started on https://url-backend-2lee.onrender.com/")
 	err := http.ListenAndServe(":8081", nil)
 	if err != nil {
 		fmt.Println("Error starting server:", err)
@@ -80,7 +80,7 @@ func shortenHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}
-	shortCode = "http://localhost:8081/" + shortCode
+	shortCode = "https://url-backend-2lee.onrender.com/" + shortCode
 	response := URL{
 		OriginalURL: originalURL,
 		ShortCode:   shortCode,
