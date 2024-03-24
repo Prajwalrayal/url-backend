@@ -81,6 +81,10 @@ func shortenHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	shortCode = "https://url-backend-2lee.onrender.com/" + shortCode
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
 	response := URL{
 		OriginalURL: originalURL,
 		ShortCode:   shortCode,
