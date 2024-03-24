@@ -9,6 +9,7 @@ import (
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
+	"github.com/rs/cors"
 )
 
 // URL struct to represent a shortened URL
@@ -39,11 +40,12 @@ func init() {
 }
 
 func main() {
-	http.HandleFunc("/shorten", shortenHandler)
-	http.HandleFunc("/", redirectHandler)
-	// Start the HTTP server on port 8080
+	mux := http.NewServeMux()
+	mux.HandleFunc("/shorten", shortenHandler)
+	mux.HandleFunc("/", redirectHandler)
+	handler := cors.Default().Handler(mux)
 	fmt.Println("Server started on https://url-backend-2lee.onrender.com/")
-	err := http.ListenAndServe(":8081", nil)
+	err := http.ListenAndServe(":8081", handler)
 	if err != nil {
 		fmt.Println("Error starting server:", err)
 	}
@@ -83,7 +85,6 @@ func shortenHandler(w http.ResponseWriter, r *http.Request) {
 	shortCode = "https://url-backend-2lee.onrender.com/" + shortCode
 
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	response := URL{
 		OriginalURL: originalURL,
