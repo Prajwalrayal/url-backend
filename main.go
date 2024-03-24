@@ -43,7 +43,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/shorten", shortenHandler)
 	mux.HandleFunc("/", redirectHandler)
-	handler := cors.Default().Handler(mux)
+	handler := cors.AllowAll().Handler(mux)
 	fmt.Println("Server started on https://url-backend-2lee.onrender.com/")
 	err := http.ListenAndServe(":8081", handler)
 	if err != nil {
